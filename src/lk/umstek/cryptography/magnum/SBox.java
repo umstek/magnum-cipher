@@ -29,4 +29,32 @@ public class SBox {
 
         return out;
     }
+
+    /**
+     * @param encrypt    encrypting or decrypting
+     * @param partialKey 2-byte partial-key
+     * @param block      2-byte sub-block
+     * @return
+     */
+    static byte[] affine(boolean encrypt, byte[] partialKey, byte[] block) {
+        return block;
+    }
+
+    /**
+     * @param encrypt    encrypting or decrypting
+     * @param partialKey 8-byte partial-key
+     * @param block      8-byte sub-block
+     * @return
+     */
+    static byte[] xor(boolean encrypt, byte[] partialKey, byte[] block) {
+        byte[] out = new byte[8];
+
+        if (encrypt || !encrypt) {
+            for (int i = 0; i < 8; i++) {
+                out[i] = (byte) (block[i] ^ partialKey[i]);
+            }
+        }
+
+        return out;
+    }
 }
