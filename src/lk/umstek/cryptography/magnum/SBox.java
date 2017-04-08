@@ -49,7 +49,7 @@ public class SBox {
         for (int i = 0; i < 256; i++) {
             int o = i;
             for (int j = 0; j < 4; j++) { // chain affine ciphers
-                o = (o * PRIMES[key[j * 2] + 128] + key[j * 2 + 1]) % 256;
+                o = (o * PRIMES[key[j * 2] + 128] + (key[j * 2 + 1] + 128)) % 256;
             }
 
             if (encrypt) { // create a lookup table for chained affine transform
