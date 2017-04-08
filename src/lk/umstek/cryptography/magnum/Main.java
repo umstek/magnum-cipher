@@ -9,7 +9,8 @@ public class Main {
         testVigenere();
         testChainedAffineSubstitute();
         testXor();
-        testblockAffinePermute();
+        testBlockAffinePermute();
+        testRoundFunction();
     }
 
     private static void testVigenere() {
@@ -63,7 +64,7 @@ public class Main {
         if (Arrays.equals(sbox1dew, block)) throw new AssertionError();
     }
 
-    private static void testblockAffinePermute() {
+    private static void testBlockAffinePermute() {
         Random random = new Random();
 
         byte[] block = new byte[16];
@@ -76,6 +77,23 @@ public class Main {
         byte[] sbox1en = PBox.blockAffinePermute(true, key1, block);
         byte[] sbox1de = PBox.blockAffinePermute(false, key1, sbox1en);
         byte[] sbox1dew = PBox.blockAffinePermute(false, key2, sbox1en);
+        if (!Arrays.equals(sbox1de, block)) throw new AssertionError();
+        if (Arrays.equals(sbox1dew, block)) throw new AssertionError();
+    }
+
+    private static void testRoundFunction() {
+        Random random = new Random();
+
+        byte[] block = new byte[16];
+        random.nextBytes(block);
+        byte[] key1 = new byte[16];
+        random.nextBytes(key1);
+        byte[] key2 = new byte[16];
+        random.nextBytes(key2);
+
+        byte[] sbox1en = Cipher.encryptRound(key1, block);
+        byte[] sbox1de = Cipher.decryptRound(key1, sbox1en);
+        byte[] sbox1dew = Cipher.decryptRound(key2, sbox1en);
         if (!Arrays.equals(sbox1de, block)) throw new AssertionError();
         if (Arrays.equals(sbox1dew, block)) throw new AssertionError();
     }
