@@ -3,11 +3,14 @@ package lk.umstek.cryptography.magnum;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ */
 public class SBox {
 
     /**
      * 256 first primes <b>after</b> 3.
-     * Obviously all are relatively prime to 256, to be used in chainAffine.
+     * Obviously all are relatively prime to 256, to be used in chainedAffineSubstitute.
      */
     private static final int[] PRIMES = {
             5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107,
@@ -32,9 +35,9 @@ public class SBox {
      * @param encrypt encrypting or decrypting
      * @param key     8-byte partial-key
      * @param block   8-byte sub-block
-     * @return
+     * @return block encrypted with Vigenère cipher
      */
-    static byte[] vigenere(boolean encrypt, byte[] key, byte[] block) {
+    static byte[] vigenere(final boolean encrypt, byte[] key, byte[] block) {
         byte[] out = new byte[8];
 
         if (encrypt) {
@@ -59,9 +62,9 @@ public class SBox {
      * @param encrypt encrypting or decrypting
      * @param key     8-byte partial-key
      * @param block   8-byte sub-block
-     * @return
+     * @return block transformed using chained affine cipher
      */
-    static byte[] chainAffine(boolean encrypt, byte[] key, byte[] block) {
+    static byte[] chainedAffineSubstitute(final boolean encrypt, byte[] key, byte[] block) {
         Map<Byte, Byte> map = new HashMap<>(256);
 
         for (int i = 0; i < 256; i++) {
@@ -91,9 +94,9 @@ public class SBox {
      * @param encrypt encrypting or decrypting
      * @param key     8-byte partial-key
      * @param block   8-byte sub-block
-     * @return
+     * @return block XORed with key
      */
-    static byte[] xor(boolean encrypt, byte[] key, byte[] block) {
+    static byte[] xor(final boolean encrypt, byte[] key, byte[] block) {
         byte[] out = new byte[8];
 
         if (encrypt || !encrypt) { // encryption and decryption are the same
