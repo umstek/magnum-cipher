@@ -1,15 +1,20 @@
 package lk.umstek.cryptography.magnum;
 
+import lk.umstek.cryptography.keyderive.Padding;
+
 import java.util.Arrays;
 import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args) {
+        testPadding();
+
         testVigenere();
         testChainedAffineSubstitute();
         testXor();
         testBlockAffinePermute();
+
         testRoundFunction();
     }
 
@@ -96,5 +101,27 @@ public class Main {
         byte[] sbox1dew = Cipher.decryptRound(key2, sbox1en);
         if (!Arrays.equals(sbox1de, block)) throw new AssertionError();
         if (Arrays.equals(sbox1dew, block)) throw new AssertionError();
+    }
+
+    private static void testPadding() {
+        Random random = new Random();
+
+        byte[] block = new byte[30];
+        random.nextBytes(block);
+        byte[] exBlock = Padding.repeatKey(block);
+
+        if (exBlock.length != 32) throw new AssertionError();
+        if (exBlock[30] != block[0]) throw new AssertionError();
+        if (exBlock[31] != block[1]) throw new AssertionError();
+
+        byte[] block1 = new byte[60];
+        random.nextBytes(block1);
+        byte[] exBlock1 = Padding.repeatKey(block1);
+
+        if (exBlock1.length != 64) throw new AssertionError();
+        if (exBlock1[60] != block1[0]) throw new AssertionError();
+        if (exBlock1[61] != block1[1]) throw new AssertionError();
+        if (exBlock1[62] != block1[2]) throw new AssertionError();
+        if (exBlock1[63] != block1[3]) throw new AssertionError();
     }
 }
