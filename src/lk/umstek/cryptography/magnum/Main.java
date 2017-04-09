@@ -1,6 +1,6 @@
 package lk.umstek.cryptography.magnum;
 
-import lk.umstek.cryptography.keyderive.Padding;
+import lk.umstek.cryptography.util.Padding;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -108,7 +108,7 @@ public class Main {
 
         byte[] block = new byte[30];
         random.nextBytes(block);
-        byte[] exBlock = Padding.repeatKey(block);
+        byte[] exBlock = Padding.repeat(block);
 
         if (exBlock.length != 32) throw new AssertionError();
         if (exBlock[30] != block[0]) throw new AssertionError();
@@ -116,7 +116,7 @@ public class Main {
 
         byte[] block1 = new byte[60];
         random.nextBytes(block1);
-        byte[] exBlock1 = Padding.repeatKey(block1);
+        byte[] exBlock1 = Padding.repeat(block1);
 
         if (exBlock1.length != 64) throw new AssertionError();
         if (exBlock1[60] != block1[0]) throw new AssertionError();
