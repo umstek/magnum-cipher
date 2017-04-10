@@ -31,7 +31,7 @@ public class Modes {
                 }
 
                 ciphertext = Construction.processSession(8, true, sessionKey, plaintext);
-                System.arraycopy(ciphertext, 0, processed, i * 32, i * 32 + 32);
+                System.arraycopy(ciphertext, 0, processed, i * 32, 32);
             }
         } else /* decrypt */ {
             byte[] output = Arrays.copyOf(iv, 32);
@@ -41,10 +41,10 @@ public class Modes {
                 byte[] ciphertext = Arrays.copyOfRange(paddedData, i * 32, i * 32 + 32);
                 byte[] plaintext = Construction.processSession(8, false, sessionKey, ciphertext);
                 for (int j = 0; j < 32; j++) { // XOR ciphertext with ciphertext
-                    plaintext[i] ^= output[i];
+                    plaintext[j] ^= output[j];
                 }
                 output = ciphertext; // for the next round, this round's ciphertext is needed
-                System.arraycopy(plaintext, 0, processed, i * 32, i * 32 + 32);
+                System.arraycopy(plaintext, 0, processed, i * 32, 32);
             }
 
         }

@@ -11,7 +11,7 @@ public final class Construction {
      * @param bytes input
      * @return 2 16-byte parts
      */
-    private static byte[][] split(byte[] bytes) {
+    static byte[][] split(byte[] bytes) {
         byte[][] split = new byte[2][16];
         System.arraycopy(bytes, 0, split[0], 0, 16);
         System.arraycopy(bytes, 16, split[1], 0, 16);
@@ -26,7 +26,7 @@ public final class Construction {
      * @param bytes 2 16-byte blocks
      * @return encrypted blocks
      */
-    private static byte[][] forward(byte[][] key, byte[][] bytes) {
+    static byte[][] forward(byte[][] key, byte[][] bytes) {
         byte[][] temp = new byte[2][16];
 
         temp[0] = Cipher.encryptRound(key[0], bytes[0]);
@@ -43,7 +43,7 @@ public final class Construction {
      * @param bytes 2 16-byte blocks of encrypted bytes
      * @return
      */
-    private static byte[][] backward(byte[][] key, byte[][] bytes) {
+    static byte[][] backward(byte[][] key, byte[][] bytes) {
         byte[][] temp = new byte[2][16];
 
         temp[0] = Cipher.decryptRound(key[0], bytes[0]);
@@ -58,7 +58,7 @@ public final class Construction {
      * @param split 2 arrays
      * @return combined arrays
      */
-    private static byte[] combine(byte[][] split) {
+    static byte[] combine(byte[][] split) {
         byte[] bytes = new byte[32];
         System.arraycopy(split[0], 0, bytes, 0, 16);
         System.arraycopy(split[1], 0, bytes, 16, 16);
@@ -80,13 +80,13 @@ public final class Construction {
 
         if (encrypt) {
             for (int i = 0; i < roundCount; i++) {
-                byte[][] roundKeys = split(KeyDerive.nextRoundKey(key, i));
-                blocks = forward(blocks, roundKeys);
+                final byte[][] roundKeys = split(KeyDerive.nextRoundKey(key, i));
+                blocks = forward(roundKeys, blocks);
             }
-        } else {
-            for (int i = 0; i < roundCount; i++) {
-                byte[][] roundKeys = split(KeyDerive.nextRoundKey(key, i));
-                blocks = backward(blocks, roundKeys);
+        } else /* decrypt */ {
+            for (int i = roundCount - 1; i >= 0; i--) {
+                final byte[][] roundKeys = split(KeyDerive.nextRoundKey(key, i));
+                blocks = backward(roundKeys, blocks);
             }
         }
 
