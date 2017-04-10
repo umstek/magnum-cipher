@@ -3,7 +3,7 @@ package lk.umstek.cryptography.magnum;
 import java.util.Arrays;
 
 /**
- *
+ * Class for multipurpose key generation
  */
 public class KeyDerive {
 

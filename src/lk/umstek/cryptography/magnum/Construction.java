@@ -1,6 +1,9 @@
 package lk.umstek.cryptography.magnum;
 
-public class Construction {
+/**
+ * Performs cipher rounds for a single block
+ */
+public final class Construction {
 
     /**
      * Splits 32-byte array into two same size parts.
@@ -16,10 +19,12 @@ public class Construction {
     }
 
     /**
-     * TODO Change this
+     * Encrypts 2 16-byte blocks
+     * // FIXME: 4/10/17 change algorithm
      *
-     * @param bytes
-     * @return
+     * @param key   2 16-byte encryption keys for each part
+     * @param bytes 2 16-byte blocks
+     * @return encrypted blocks
      */
     private static byte[][] forward(byte[][] key, byte[][] bytes) {
         byte[][] temp = new byte[2][16];
@@ -31,10 +36,11 @@ public class Construction {
     }
 
     /**
-     * TODO Change this too
+     * Decrypts 2 blocks
+     * // FIXME: 4/10/17 change algorithm
      *
-     * @param key
-     * @param bytes
+     * @param key   2 16-byte keys
+     * @param bytes 2 16-byte blocks of encrypted bytes
      * @return
      */
     private static byte[][] backward(byte[][] key, byte[][] bytes) {
@@ -63,11 +69,11 @@ public class Construction {
      * Process multiple rounds of cipher for a block of data.
      * This is a single step in a mode of operation e.g.: CBC.
      *
-     * @param roundCount
-     * @param encrypt
-     * @param key
-     * @param block
-     * @return
+     * @param roundCount how many rounds to perform
+     * @param encrypt    whether to encrypt or to decrypt
+     * @param key        key to use
+     * @param block      block to process
+     * @return processed block
      */
     public static byte[] processSession(final int roundCount, final boolean encrypt, byte[] key, byte[] block) {
         byte[][] blocks = split(block);

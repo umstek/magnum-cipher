@@ -3,15 +3,18 @@ package lk.umstek.cryptography.magnum;
 import java.util.Arrays;
 
 /**
- *
+ * Cipher modes of operation
+ * // TODO: 4/10/17 add other modes
  */
 public class Modes {
 
     /**
-     * @param encrypt
-     * @param paddedKey
-     * @param paddedData
-     * @return
+     * Performs cipher-block-chaining mode encryption or decryption
+     *
+     * @param encrypt    whether to encrypt or decrypt
+     * @param paddedKey  binary key which has its length multiple of 32 bytes
+     * @param paddedData binary data padded to match multiple-of-32 constraint
+     * @return Encrypted data
      */
     public static byte[] cbc(final boolean encrypt, final byte[] iv, byte[] paddedKey, byte[] paddedData) {
         byte[] processed = new byte[paddedData.length];

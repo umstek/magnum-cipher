@@ -1,7 +1,7 @@
 package lk.umstek.cryptography.magnum;
 
 /**
- *
+ * Encapsulates constants
  */
 public final class Constants {
 
