@@ -79,7 +79,7 @@ public class Main {
 
         byte[] passwordBytes = password.getBytes();
         byte[] iv = Arrays.copyOfRange(fileBytes, 0, 32);
-        byte[] data = Arrays.copyOfRange(fileBytes, 32, fileBytes.length - 32);
+        byte[] data = Arrays.copyOfRange(fileBytes, 32, fileBytes.length);
 
         final byte[] decrypted = Magnum.decrypt(iv, passwordBytes, data);
 
