@@ -37,16 +37,16 @@ public class KeyDerive {
     /**
      * Generates a new key for round
      *
-     * @param fullKey     Full key derived for the session
+     * @param sessionKey  Key derived for the session
      * @param roundNumber Index of the round being processed
      * @return
      */
-    public static byte[] nextRoundKey(byte[] fullKey, final int roundNumber) {
-        int times = roundNumber * 32 / fullKey.length;
-        int start = roundNumber * 32 % fullKey.length;
+    public static byte[] nextRoundKey(byte[] sessionKey, final int roundNumber) {
+        int times = roundNumber * 32 / sessionKey.length;
+        int start = roundNumber * 32 % sessionKey.length;
         int end = start + 32;
 
-        byte[] key = Arrays.copyOfRange(fullKey, start, end);
+        byte[] key = Arrays.copyOfRange(sessionKey, start, end);
         for (int i = 0; i < times; i++) {
             byte[] newKey = new byte[32];
             for (int j = 0; j < 2; j++) {

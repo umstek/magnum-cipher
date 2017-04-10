@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Combines all the substitutions and permutations into a single step
  */
-public class Cipher {
+public final class Cipher {
 
     /**
      * A single step consists of following steps.

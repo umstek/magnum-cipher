@@ -7,7 +7,7 @@ import static lk.umstek.cryptography.magnum.Constants.PRIMES;
 /**
  * Permutations
  */
-public class PBox {
+public final class PBox {
 
     /**
      * Applies affine cipher to the indices of rows and columns of a 4*4 matrix

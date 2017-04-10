@@ -3,7 +3,7 @@ package lk.umstek.cryptography.magnum;
 /**
  *
  */
-public class Constants {
+public final class Constants {
 
     /**
      * 256 first primes <b>after</b> 3.

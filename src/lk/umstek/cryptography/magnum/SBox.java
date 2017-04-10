@@ -5,7 +5,7 @@ import static lk.umstek.cryptography.magnum.Constants.PRIMES;
 /**
  * Substitutions
  */
-public class SBox {
+public final class SBox {
 
     /**
      * Byte-wise implementation of classical Vigenère cipher <i>(b_i + k_i) mod m</i>;
