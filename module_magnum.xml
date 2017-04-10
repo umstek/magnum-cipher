@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_magnum" default="compile.module.magnum">
+  <dirname property="module.magnum.basedir" file="${ant.file.module_magnum}"/>
+  
+  <property name="module.jdk.home.magnum" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.magnum" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.magnum" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.magnum" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="magnum.output.dir" value="${module.magnum.basedir}/out/production/magnum"/>
+  <property name="magnum.testoutput.dir" value="${module.magnum.basedir}/out/test/magnum"/>
+  
+  <path id="magnum.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="magnum.module.production.classpath">
+    <path refid="${module.jdk.classpath.magnum}"/>
+  </path>
+  
+  <path id="magnum.runtime.production.module.classpath">
+    <pathelement location="${magnum.output.dir}"/>
+  </path>
+  
+  <path id="magnum.module.classpath">
+    <path refid="${module.jdk.classpath.magnum}"/>
+    <pathelement location="${magnum.output.dir}"/>
+  </path>
+  
+  <path id="magnum.runtime.module.classpath">
+    <pathelement location="${magnum.testoutput.dir}"/>
+    <pathelement location="${magnum.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.magnum">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.magnum">
+    <patternset refid="excluded.from.module.magnum"/>
+  </patternset>
+  
+  <path id="magnum.module.sourcepath">
+    <dirset dir="${module.magnum.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.magnum" depends="compile.module.magnum.production,compile.module.magnum.tests" description="Compile module magnum"/>
+  
+  <target name="compile.module.magnum.production" description="Compile module magnum; production classes">
+    <mkdir dir="${magnum.output.dir}"/>
+    <javac destdir="${magnum.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.magnum}/javac">
+      <compilerarg line="${compiler.args.magnum}"/>
+      <bootclasspath refid="magnum.module.bootclasspath"/>
+      <classpath refid="magnum.module.production.classpath"/>
+      <src refid="magnum.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.magnum"/>
+    </javac>
+    
+    <copy todir="${magnum.output.dir}">
+      <fileset dir="${module.magnum.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.magnum.tests" depends="compile.module.magnum.production" description="compile module magnum; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.magnum" description="cleanup module">
+    <delete dir="${magnum.output.dir}"/>
+    <delete dir="${magnum.testoutput.dir}"/>
+  </target>
+</project>
