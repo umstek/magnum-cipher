@@ -27,7 +27,7 @@ public class Modes {
                     plaintext[j] ^= ciphertext[j];
                 }
 
-                ciphertext = MagnumConstruction.processSession(8, true, sessionKey, plaintext);
+                ciphertext = Construction.processSession(8, true, sessionKey, plaintext);
                 System.arraycopy(ciphertext, 0, processed, i * 32, i * 32 + 32);
             }
         } else /* decrypt */ {
@@ -36,7 +36,7 @@ public class Modes {
                 byte[] sessionKey = KeyDerive.nextSessionKey(paddedKey, i);
 
                 byte[] ciphertext = Arrays.copyOfRange(paddedData, i * 32, i * 32 + 32);
-                byte[] plaintext = MagnumConstruction.processSession(8, false, sessionKey, ciphertext);
+                byte[] plaintext = Construction.processSession(8, false, sessionKey, ciphertext);
                 for (int j = 0; j < 32; j++) { // XOR ciphertext with ciphertext
                     plaintext[i] ^= output[i];
                 }

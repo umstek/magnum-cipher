@@ -1,6 +1,6 @@
 package lk.umstek.cryptography.magnum;
 
-public class MagnumConstruction {
+public class Construction {
 
     /**
      * Splits 32-byte array into two same size parts.
