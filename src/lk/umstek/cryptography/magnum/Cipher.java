@@ -3,7 +3,7 @@ package lk.umstek.cryptography.magnum;
 import java.util.Arrays;
 
 /**
- *
+ * Combines all the substitutions and permutations into a single step
  */
 public class Cipher {
 

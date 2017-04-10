@@ -3,7 +3,7 @@ package lk.umstek.cryptography.magnum;
 import static lk.umstek.cryptography.magnum.Constants.PRIMES;
 
 /**
- *
+ * Substitutions
  */
 public class SBox {
 

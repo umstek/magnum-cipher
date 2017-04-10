@@ -5,7 +5,7 @@ import java.util.Arrays;
 import static lk.umstek.cryptography.magnum.Constants.PRIMES;
 
 /**
- *
+ * Permutations
  */
 public class PBox {
 
